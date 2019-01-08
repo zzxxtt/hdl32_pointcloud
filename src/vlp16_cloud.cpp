@@ -118,11 +118,11 @@ void cloud_callback (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 	vector< pcl::PointCloud<pcl::PointXYZI> > cloudVector;
 	pcl::PCLPointCloud2 pcl_pc2;
   pcl_conversions::toPCL(*cloud_msg, pcl_pc2);
-  fromPCLPointCloud2ToVelodyneCloud (pcl_pc2, *cloud1D, cloudVector, 16);
+  fromPCLPointCloud2ToVelodyneCloud (pcl_pc2, *cloud1D, cloudVector, 32);
   pcl::PCDWriter writer;
   writer.write<pcl::PointXYZI> ("cloud1D.pcd", *cloud1D, false);
 
-  for(int i=0; i<16; ++i)
+  for(int i=0; i<32; ++i)
   {
     stringstream ss;
     ss<<"velodyne_rings/ring"<<i<<".pcd";
@@ -132,7 +132,7 @@ void cloud_callback (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 
 int main (int argc, char** argv)
 {
-  ros::init (argc, argv, "vlp16_cloud");
+  ros::init (argc, argv, "hdl32_cloud");
   ros::NodeHandle nh;
 
   ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2> ("/velodyne_points", 10, cloud_callback);
